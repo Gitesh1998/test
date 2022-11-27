@@ -1,0 +1,28 @@
+<div>
+  <h4>{{error}}</h4>
+  <button *ngIf="error?.length" (click)="error=undefined">Close Error</button>
+</div>
+<div>
+  <p *ngIf="!isUserAvailable">No user to show</p>
+  <div>
+    <button (click)="isAddUser=true" *ngIf="!isAddUser">Add user</button>
+    <button *ngIf="isAddUser" (click)="closeForm()">{{closeButtonText}}</button>  
+  </div>
+  <div *ngIf="isAddUser">
+    First Name: <input type="text" [(ngModel)]="firstName" [disabled]="inputDisable"><br><br>
+    Last Name: <input type="text" [(ngModel)]="lastName" [disabled]="inputDisable"><br><br>
+    *Email: <input type="email"[(ngModel)]="email" [disabled]="emailDisable" placeholder="Email is required"><br><br>
+    Phone Number: <input type="text" [(ngModel)]="phoneNumber" [disabled]="inputDisable" placeholder="Enter 10 digit contact number"><br><br>
+    Choose Profile Picture: <input type="file" id="file" accept="image/png, image/jpeg" (change)="pickImage($event)"><p *ngIf="fileName">{{fileName}}</p><br><br>
+    <button *ngIf="!emailDisable" (click)="addUser()">Add New User</button>
+    <button *ngIf="emailDisable && !inputDisable" (click)="updateUser()">Update User</button>
+  </div>
+  <div>
+    <li *ngFor="let user of users; index as i;">
+      User: {{user.firstName}} {{user.lastName}}
+      <button (click)="getUserDetail(user)">View Details</button>
+      <button (click)="updateUserDetail(user)">Update</button>
+      <button (click)="deleteUser(user._id)">Delete</button>
+    </li>
+  </div>
+</div>
